@@ -1,0 +1,87 @@
+@import "../../../sass/var";
+@import "../../../sass/mixing";
+
+@mixin flex($justify-content) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: center;
+}
+
+#navbar {
+  background-color: white;
+  width: 100%;
+  height: 90px;
+  position: relative;
+  z-index: 999;
+  @include flex(space-between);
+  .links {
+    @include flex(space-between);
+
+    margin: 0 30px;
+    .logo {
+      cursor: pointer;
+      img {
+        height: 50px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      margin-left: 30px;
+      li {
+        font-family: $DM_sans;
+        color: rgb(78, 78, 78);
+        margin: 0 10px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        &:hover {
+          color: $main_color;
+        }
+      }
+    }
+  }
+
+  .buttons {
+    margin: 0 20px;
+
+    button {
+      padding: 13px 30px;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      margin: 0 10px;
+      font-size: 15px;
+      font-weight: bold;
+      font-family: $Inter_sans;
+      background-color: transparent;
+      border: 2px solid $main_color;
+      transition: 0.2s ease;
+      color: $main_color;
+      cursor: pointer;
+      &:hover {
+        filter: drop-shadow(0px 0px 5px $main_color);
+      }
+      &:active {
+        background-color: $main_hover;
+      }
+    }
+
+    .sign-in {
+      &:hover {
+        color: white;
+        background-color: $main_color;
+      }
+      &:active {
+        background-color: $main_hover;
+      }
+    }
+
+    .sign-up {
+      color: white;
+      background-color: $main_color;
+    }
+  }
+
+  // more code...
+}

@@ -1,0 +1,248 @@
+#tools-tooltip {
+  font-family: "Inter", sans-serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+#room {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
+  background-color: black;
+}
+#room .videos {
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  background-color: rgb(70, 68, 68);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#room .videos .video {
+  width: 300px;
+  margin: 0 5px;
+  border-radius: 7px;
+}
+#room .share-box {
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  padding: 20px;
+  bottom: 100px;
+  border-radius: 5px;
+  background-color: #1b1b1b;
+  color: white;
+  font-family: "Inter", sans-serif;
+  display: none;
+}
+#room .share-box p {
+  margin-bottom: 10px;
+}
+#room .share-box input {
+  padding: 7px 10px;
+  width: 270px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-family: "DM Sans", sans-serif;
+}
+#room .share-box button {
+  margin-left: 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #292929;
+  cursor: pointer;
+}
+#room .share-box-active {
+  display: block;
+}
+#room .tool-box {
+  width: 70%;
+  padding: 15px 0;
+  position: absolute;
+  z-index: 2;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b1b1b;
+  border-radius: 20px;
+}
+#room .tool-box div {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  margin: 0 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#room .tool-box div:active {
+  background-color: rgb(112, 112, 112);
+}
+#room .tool-box .video-button {
+  padding: 10px;
+  font-size: larger;
+  background-color: grey;
+  border-radius: 5px;
+}
+#room .tool-box .mic-button {
+  padding: 10px;
+  font-size: larger;
+  background-color: grey;
+  border-radius: 5px;
+}
+#room .tool-box .share-button {
+  padding: 10px;
+  font-size: larger;
+  background-color: grey;
+  border-radius: 5px;
+}
+#room .tool-box .participants-button {
+  padding: 10px;
+  font-size: larger;
+  background-color: grey;
+  border-radius: 5px;
+}
+#room .tool-box .sms-button {
+  padding: 10px;
+  font-size: larger;
+  background-color: grey;
+  border-radius: 5px;
+  position: relative;
+}
+#room .tool-box .sms-button .sms-indicator {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  background-color: rgb(64, 255, 64);
+  border-radius: 100px;
+  top: 5px;
+  right: -5px;
+}
+#room .tool-box .end-call {
+  color: white;
+  background-color: red;
+  padding: 10px 30px;
+  font-size: larger;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+#room .tool-box .end-call:hover {
+  box-shadow: 0px 0px 5px red;
+}
+#room .tool-box .end-call:active {
+  background-color: rgb(214, 2, 2);
+}
+#room .participants-box {
+  width: 320px;
+  height: 85vh;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #1b1b1b;
+  border-radius: 0px 10px 10px 0px;
+  padding: 15px;
+  animation: box-animation 0.5s ease forwards;
+  display: none;
+  color: white;
+  font-family: "Inter", sans-serif;
+  overflow-y: auto;
+}
+#room .participants-box li {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+#room .participants-box-active {
+  display: block;
+}
+#room .chat-box {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 85vh;
+  background-color: #1b1b1b;
+  border-radius: 10px 0px 0px 10px;
+  padding: 0px 15px;
+  display: none;
+}
+#room .chat-box .messages {
+  width: 100%;
+  height: 80%;
+  margin-bottom: 20px;
+  color: white;
+  font-family: "Inter", sans-serif;
+  overflow-y: auto;
+}
+#room .chat-box .messages li {
+  list-style-type: none;
+  margin-bottom: 5px;
+}
+#room .chat-box .chat-box-inputs {
+  width: 100%;
+  height: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#room .chat-box .chat-box-inputs input {
+  width: 80%;
+  height: 100%;
+  padding: 10px 12px;
+  border-radius: 5px 0px 0px 5px;
+  border: none;
+  outline: none;
+  font-family: "Inter", sans-serif;
+}
+#room .chat-box .chat-box-inputs button {
+  width: 20%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 0px 5px 5px 0px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+}
+#room .chat-box .chat-box-inputs button:hover {
+  background-color: #dddcdc;
+}
+#room .chat-box .chat-box-inputs button:active {
+  background-color: #cecece;
+}
+#room .chat-box-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: box-animation 0.5s ease forwards;
+}
+
+@keyframes box-animation {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 350px;
+  }
+}/*# sourceMappingURL=room.css.map */

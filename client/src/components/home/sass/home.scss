@@ -1,0 +1,175 @@
+@import "../../../sass/var";
+@import "../../../sass/mixing";
+
+@keyframes expand {
+  0% {
+    width: 1%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+#home {
+  width: 100%;
+  height: 86.7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  .left {
+    width: 50%;
+    height: 100%;
+    padding: 0 50px;
+    //
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    //
+    font-family: $Inter_sans;
+
+    .bar {
+      width: 100%;
+      height: 30px;
+      padding: 15px;
+      border: 2px solid #90e0e0;
+      background-color: #f4fcfc;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        background-color: #d8f4f4;
+      }
+    }
+
+    header {
+      margin-top: 30px;
+      color: #252525;
+      h1 {
+        font-size: 60px;
+        span {
+          background-color: $main_color;
+          color: white;
+        }
+      }
+      p {
+        font-size: medium;
+        margin-top: 20px;
+      }
+    }
+
+    .inputs {
+      width: fit-content;
+      margin-top: 40px;
+      display: flex;
+      button {
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        font-family: $Inter_sans;
+        font-weight: bold;
+      }
+      .new-meeting {
+        padding: 15px;
+        background-color: $main_color;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          transition: 0.2s ease;
+          filter: drop-shadow(0px 0px 5px $main_color);
+        }
+        &:active {
+          background-color: $main_hover;
+        }
+        .plus-icon {
+          margin-right: 5px;
+        }
+      }
+      .input {
+        margin-left: 20px;
+        width: 270px;
+        border-radius: 5px;
+        padding: 0 5px;
+        border: 1px solid grey;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-right: 7px;
+
+        .keyboard-icon {
+          color: #252525;
+        }
+
+        input {
+          width: 85%;
+          padding: 5px;
+          border: none;
+          outline: none;
+        }
+        &:hover {
+          border: 1px solid black;
+        }
+      }
+      .input-focused {
+        border: 2px solid $main_color;
+        &:hover {
+          border: 2px solid $main_color;
+        }
+      }
+      .join {
+        background-color: transparent;
+        color: grey;
+        padding: 15px;
+        cursor: not-allowed;
+      }
+      .joinV2 {
+        background-color: transparent;
+        color: $main_color;
+        padding: 15px;
+        cursor: pointer;
+        &:focus {
+          border: 2px dotted $main_color;
+        }
+        &:hover {
+          color: white;
+          background-color: $main_color;
+        }
+        &:active {
+          background-color: $main_hover;
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border: 1px solid $main_color;
+      border-radius: 20px;
+      animation: expand 1.5s ease forwards;
+    }
+
+    .credits {
+      a {
+        text-decoration: none;
+        color: $main_color;
+      }
+    }
+  }
+
+  .right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}

@@ -1,0 +1,135 @@
+@import "../../../../sass/var";
+@import "../../../../sass/mixing";
+
+#signup {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+
+  .img {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f9fa;
+  }
+
+  .sign-up-form {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // border: 2px solid red;
+      h2 {
+        font-family: $Inter_sans;
+        font-size: 35px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #252525;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        input {
+          width: 300px;
+          font-size: medium;
+          padding: 12px 15px;
+          border-radius: 5px;
+          border: 1px solid grey;
+          outline: none;
+        }
+        .error {
+          color: red;
+          margin-top: 5px;
+          font-family: $Inter_sans;
+          padding: 0 5px;
+        }
+      }
+
+      .check-box {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        font-family: $Inter_sans;
+        span {
+          margin-left: 10px;
+        }
+      }
+
+      .sign-up-button {
+        margin-top: 20px;
+        font-family: $Inter_sans;
+        padding: 12px 15px;
+        border: 2px solid $main_color;
+        border-radius: 5px;
+        outline: none;
+        font-weight: bold;
+        font-size: medium;
+        background-color: transparent;
+        color: $main_color;
+        cursor: not-allowed;
+      }
+
+      .sign-up-button-active {
+        cursor: pointer;
+        color: white;
+        background-color: $main_color;
+        transition: 0.2s ease;
+        &:hover {
+          filter: drop-shadow(0px 0px 5px $main_color);
+        }
+        &:active {
+          background-color: $main_hover;
+        }
+      }
+
+      .or-sign-up-with {
+        text-align: center;
+        margin-top: 30px;
+        color: #252525;
+        font-family: $Inter_sans;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        span {
+          margin: 0 10px;
+        }
+        hr {
+          width: 27%;
+        }
+      }
+
+      .google-login-button {
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px;
+        cursor: pointer;
+        &:active {
+          background-color: rgb(238, 238, 238);
+        }
+        img {
+          height: 30px;
+        }
+      }
+
+      .already-have-an-account {
+        text-align: center;
+        font-family: $Inter_sans;
+        color: #252525;
+        span {
+          color: $main_color;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

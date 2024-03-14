@@ -1,0 +1,250 @@
+import { React, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Tooltip } from "react-tooltip";
+
+import Webcam from "react-webcam";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCopy,
+  faMessage,
+  faPhone,
+  faShare,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+
+import ParticipantsBox from "./ParticipantsBox";
+import ShareBox from "./ShareBox";
+
+import "./sass/room.css";
+
+const Room = ({ socketInstance, peerInstance, name }) => {
+  const { meetingId } = useParams();
+
+  const [participants, setParticipants] = useState(); // list of all the participants
+
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
+  const [messageIndicator, setMessageIndicator] = useState(false);
+  const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
+  const [isParticipantsBoxOpen, setIsParticipantsBoxOpen] = useState(false);
+
+  const myStream = useRef(null);
+  const otherUserStream = useRef(null);
+
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", (e) => e.preventDefault());
+  // }, []);
+
+  useEffect(() => {
+    try {
+      socketInstance.current.on("meeting-joined", (data) => {
+        toast(data, {
+          duration: 3000,
+        });
+      });
+
+      // currently working
+
+      socketInstance.current.on("get-peerId", async (peerId) => {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+
+        const call = peerInstance.current.call(peerId, stream);
+        call.on("stream", (remoteStream) => {
+          otherUserStream.current.srcObject = remoteStream;
+        });
+      });
+
+      peerInstance.current.on("call", async (call) => {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+
+        call.answer(stream);
+        call.on("stream", (remoteStream) => {
+          otherUserStream.current.srcObject = remoteStream;
+        });
+      });
+
+      // currently working
+
+      socketInstance.current.on("get-participants-list", (data) => {
+        setParticipants(data);
+      });
+
+      socketInstance.current.on("message", (data) => {
+        setMessageIndicator(true);
+        setMessages((prevArray) => [...prevArray, data]);
+      });
+
+      socketInstance.current.on("user-left", (data) => {
+        socketInstance.current.emit("get-participants", meetingId);
+        toast(data, {
+          duration: 3000,
+        });
+      });
+
+      socketInstance.current.on("disconnect", () => {
+        // turn off the video
+      });
+
+      // more code...
+    } catch (e) {
+      navigate("/");
+    }
+
+    return () => {
+      try {
+        socketInstance.current.disconnect();
+      } catch (e) {
+        navigate("/");
+      }
+    };
+  }, []);
+
+  const handleEndCall = () => {
+    socketInstance.current.disconnect();
+    navigate("/");
+  };
+
+  const getParticipants = () => {
+    setIsParticipantsBoxOpen(!isParticipantsBoxOpen);
+    socketInstance.current.emit("get-participants", meetingId);
+  };
+
+  const openChatBox = () => {
+    setIsChatBoxOpen(!isChatBoxOpen);
+    setMessageIndicator(false);
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (message.length !== 0) {
+      socketInstance.current.emit("message", { meetingId, name, message });
+      setMessages((prevArray) => [...prevArray, `${name}: ${message}`]);
+      setMessage("");
+      setMessageIndicator(false);
+    }
+  };
+
+  // icons
+
+  const copy = <FontAwesomeIcon className=" icon" icon={faCopy} />;
+  const phone = <FontAwesomeIcon className=" icon" icon={faPhone} />;
+  const sms = <FontAwesomeIcon className="icon" icon={faMessage} />;
+  const share = <FontAwesomeIcon className=" icon" icon={faShare} />;
+  const participantsIcon = (
+    <FontAwesomeIcon className=" icon" icon={faUserGroup} />
+  );
+
+  return (
+    <>
+      <main id="room">
+        <div className="videos">
+          <Webcam audio={false} className="video" />
+          {<video autoPlay ref={otherUserStream} controls className="video" />}
+        </div>
+
+        <ShareBox
+          isShareBoxOpen={isShareBoxOpen}
+          meetingId={meetingId}
+          copy={copy}
+        />
+
+        <ParticipantsBox
+          isParticipantsBoxOpen={isParticipantsBoxOpen}
+          participants={participants}
+        />
+
+        <div className="tool-box">
+          <Tooltip id="tools-tooltip" />
+
+          <div
+            className="share-button"
+            data-tooltip-id="tools-tooltip"
+            data-tooltip-content={"Share"}
+            onClick={() => setIsShareBoxOpen(!isShareBoxOpen)}
+          >
+            {share}
+          </div>
+
+          <div
+            className="participants-button"
+            data-tooltip-id="tools-tooltip"
+            data-tooltip-content={"Participants"}
+            onClick={getParticipants}
+          >
+            {participantsIcon}
+          </div>
+
+          <div
+            className="sms-button"
+            data-tooltip-id="tools-tooltip"
+            data-tooltip-content={"Chat"}
+            onClick={openChatBox}
+          >
+            {messageIndicator && <div className="sms-indicator"></div>}
+            {sms}
+          </div>
+
+          <div
+            className="end-call"
+            data-tooltip-id="tools-tooltip"
+            data-tooltip-content={"End call"}
+            onClick={handleEndCall}
+          >
+            {phone}
+          </div>
+        </div>
+
+        {/* chat box */}
+
+        <div className={`chat-box ${isChatBoxOpen ? " chat-box-active" : ""} `}>
+          <div className="messages">
+            {messages.length == 0 ? (
+              <span>No messages available</span>
+            ) : (
+              messages.map((v, i) => <li key={i}>{v}</li>)
+            )}
+          </div>
+          <form className="chat-box-inputs" onSubmit={handleSendMessage}>
+            <input
+              type="text"
+              placeholder="Type here..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+
+        {/* chat box */}
+      </main>
+    </>
+  );
+};
+
+export default Room;
+
+
+
+
+
+
+
+
+
+
+
+
+
